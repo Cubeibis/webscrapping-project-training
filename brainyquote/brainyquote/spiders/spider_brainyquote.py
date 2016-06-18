@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import scrapy, urlparse
+import scrapy, urlparse, re
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from brainyquote.items import BrainyquoteItem
@@ -38,11 +38,23 @@ class SpiderBrainyquoteSpider(CrawlSpider):
         
         for i, individual_quote in enumerate(response.xpath('//div[contains(@id, "quotesList")]/div')):
             img_path = individual_quote.xpath('./a/img/@src').extract_first()
+            quote = individual_quote.xpath('.//a[starts-with(@class, "qt")]/text()').extract_first()
+            categories = individual_quote.xpath('./div[contains(@class, "bq_q_nav"]//a/text()').extract()
+            new_categories = []
+
+            for individual_category in categories:
+                individual_category = re.sub(r'\s+','',individual_category)
+
+                if individual_category:
+                    new_categories.append(individual_category)
+            ## End loop Categories
+
             full_img_path = None
             if img_path:
                 full_img_path = urlparse.urljoin(response.url, img_path)
-                
-            self.logger.info('Quote: {} - {}'.format(i, img_path))
+            ## Verifies contains image
+
+            self.logger.info('Quote: {} - {} - {}'.format(full_img_path,quote,categories))
             if i > 2:
                 break
         ## End for loop i
