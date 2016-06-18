@@ -35,6 +35,9 @@ class SpiderBrainyquoteSpider(CrawlSpider):
 
     def parse_author(self, response):
         item = BrainyquoteItem(response.request.meta['item'])
+
+        ##Searching author in Amazon
+        amazon_link = response.xpath('//a[contains(@href, "amazon.com")]@href').extract_first()
         
         for i, individual_quote in enumerate(response.xpath('//div[contains(@id, "quotesList")]/div')):
             img_path = individual_quote.xpath('./a/img/@src').extract_first()
@@ -54,7 +57,7 @@ class SpiderBrainyquoteSpider(CrawlSpider):
                 full_img_path = urlparse.urljoin(response.url, img_path)
             ## Verifies contains image
 
-            self.logger.info('Quote: {} - {}'.format(i,new_categories))
+            self.logger.info('Quote: {} - {} - {}'.format(i,quote,amazon_link))
             if i > 2:
                 break
         ## End for loop i
