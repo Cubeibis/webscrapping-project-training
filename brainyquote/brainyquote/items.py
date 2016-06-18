@@ -15,4 +15,4 @@ class BrainyquoteItem(scrapy.Item):
     quote = scrapy.Field()
     quote_image = scrapy.Field()
     amazon_source = scrapy.Field()
-    categories = scrapy.Field
+    categories = scrapy.Field()
