@@ -37,7 +37,7 @@ class SpiderBrainyquoteSpider(CrawlSpider):
         item = BrainyquoteItem(response.request.meta['item'])
 
         ##Searching author in Amazon
-        amazon_link = response.xpath('//a[contains(@href, "amazon.com")]@href').extract_first()
+        amazon_link = response.xpath('//a[contains(@href, "amazon.com")]/@href').extract_first()
         
         for i, individual_quote in enumerate(response.xpath('//div[contains(@id, "quotesList")]/div')):
             img_path = individual_quote.xpath('./a/img/@src').extract_first()
