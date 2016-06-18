@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import scrapy
+import scrapy ,urlparse
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from brainyquote.items import BrainyquoteItem
@@ -23,7 +23,8 @@ class SpiderBrainyquoteSpider(CrawlSpider):
         for individual_author in response.xpath('//div[contains(@class, "bq_s")]//div[contains(@class, "bq_fl")]//div[contains(@class, "bqLn")]'):
             author_name = individual_author.xpath('./a/text()').extract_first()
             author_link = individual_author.xpath('./a/@href').extract_first()
-            self.logger.info('INFORMATION: {0} - {1}'.format(author_name, author_link))
+            full_author_link = urlparse.urljoin(response.url,author_link)
+            self.logger.info('INFORMATION: {0} - {1}'.format(author_name, full_author_link))
             # break            
         ## End for loop individual author
     ## End first_quotes
