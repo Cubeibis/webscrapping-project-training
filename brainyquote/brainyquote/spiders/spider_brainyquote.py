@@ -39,7 +39,7 @@ class SpiderBrainyquoteSpider(CrawlSpider):
         for i, individual_quote in enumerate(response.xpath('//div[contains(@id, "quotesList")]/div')):
             img_path = individual_quote.xpath('./a/img/@src').extract_first()
             quote = individual_quote.xpath('.//a[starts-with(@class, "qt")]/text()').extract_first()
-            categories = individual_quote.xpath('./div[contains(@class, "bq_q_nav"]//a/text()').extract()
+            categories = individual_quote.xpath('./div[contains(@class, "bq_q_nav")]//a/text()').extract()
             new_categories = []
 
             for individual_category in categories:
@@ -54,7 +54,7 @@ class SpiderBrainyquoteSpider(CrawlSpider):
                 full_img_path = urlparse.urljoin(response.url, img_path)
             ## Verifies contains image
 
-            self.logger.info('Quote: {} - {} - {}'.format(full_img_path,quote,categories))
+            self.logger.info('Quote: {} - {}'.format(i,new_categories))
             if i > 2:
                 break
         ## End for loop i
