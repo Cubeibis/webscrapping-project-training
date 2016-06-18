@@ -13,6 +13,6 @@ class BrainyquoteItem(scrapy.Item):
     # name = scrapy.Field()
     author_name = scrapy.Field()
     quote = scrapy.Field()
-    quote_image = scrappy.Field()
+    quote_image = scrapy.Field()
     amazon_source = scrapy.Field()
     categories = scrapy.Field
