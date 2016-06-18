@@ -58,7 +58,7 @@ class SpiderBrainyquoteSpider(CrawlSpider):
                 full_img_path = urlparse.urljoin(response.url, img_path)
             ## Verifies contains image
 
-            item['quote_img'] = full_img_path
+            item['quote_image'] = full_img_path
             item['quote'] = quote
             item['amazon_source'] = amazon_link
             item['categories'] = new_categories
